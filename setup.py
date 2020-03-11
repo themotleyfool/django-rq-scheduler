@@ -30,7 +30,6 @@ tests_require = [
     'psycopg2>=2.6.1',
 ]
 
-
 setup(
     name='readwise-django-rq-scheduler',
     version=get_version(HERE),
@@ -40,10 +39,10 @@ setup(
     include_package_data=True,
     author='Chad Shryock',
     author_email='chad@isl.co',
-    url='https://github.com/istrategylabs/django-rq-scheduler',
+    url='https://github.com/TristanH/django-rq-scheduler',
     zip_safe=True,
     install_requires=[
-        'django>=1.9.0',
+        'django>=2',
         'django-model-utils>=2.4.0',
         'django-rq>=0.9.0',
         'rq_scheduler>=0.6.0',
@@ -60,7 +59,11 @@ setup(
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 2.7',
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
         'Framework :: Django',
+        "Framework :: Django :: 2.0",
+        "Framework :: Django :: 3.0",
     ],
 )
