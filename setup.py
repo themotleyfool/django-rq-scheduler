@@ -32,7 +32,7 @@ tests_require = [
 
 setup(
     name='readwise-django-rq-scheduler',
-    version='1.1.4',
+    version='1.2.2',
     description="A database backed job scheduler for Django RQ",
     long_description=long_description,
     packages=find_packages(),
