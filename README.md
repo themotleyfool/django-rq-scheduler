@@ -1,4 +1,4 @@
-# Django RQ Scheduler
+# Readwise Django RQ Scheduler
 
 A database backed job scheduler for Django RQ.
 
@@ -34,17 +34,12 @@ pip install django-rq-scheduler
 
 1. In `settings.py`, add `django_rq` and `scheduler` to  `INSTALLED_APPS`:
 
-	```
-
 	INSTALLED_APPS = [
     	...
     	'django_rq',
     	'scheduler',
     	...
 	]
-
-
-	```
 
 2. Configure Django RQ. See https://github.com/ui/django-rq#installation
 
@@ -65,11 +60,11 @@ An example:
 
 **myapp.jobs.py**
 
-```
-@job
-def count():
-    return 1 + 1
-```
+.. code:: python
+
+    @job
+    def count():
+        return 1 + 1
 
 ## Scheduling a Job
 

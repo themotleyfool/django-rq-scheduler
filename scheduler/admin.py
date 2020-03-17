@@ -5,6 +5,7 @@ from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 
 from scheduler.models import CronJob, RepeatableJob, ScheduledJob
+from scheduler.forms import JobAdminForm
 
 
 QUEUES = [(key, key) for key in settings.RQ_QUEUES.keys()]
@@ -53,6 +54,7 @@ class ScheduledJobAdmin(QueueMixin, admin.ModelAdmin):
                 'timeout',
                 'result_ttl'
             ),
+            'description': _('Please be aware: Scheduled Time has to be in the future.'),
         }),
     )
 
@@ -81,6 +83,7 @@ class RepeatableJobAdmin(QueueMixin, admin.ModelAdmin):
                 'timeout',
                 'result_ttl'
             ),
+            'description': _('Please be aware: Scheduled Time has to be in the future.'),
         }),
     )
 

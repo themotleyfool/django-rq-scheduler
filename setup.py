@@ -30,9 +30,8 @@ tests_require = [
     'factory_boy>=2.11.1',
 ]
 
-
 setup(
-    name="django-rq-scheduler",
+    name='readwise-django-rq-scheduler',
     version=get_version(HERE),
     description="A database backed job scheduler for Django RQ",
     long_description=long_description,
