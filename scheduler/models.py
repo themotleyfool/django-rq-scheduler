@@ -100,7 +100,7 @@ class BaseJob(TimeStampedModel):
             return False
         kwargs = {}
         if self.timeout:
-            kwargs['timeout'] = self.timeout
+            kwargs['job_timeout'] = self.timeout
         if self.result_ttl is not None:
             kwargs['result_ttl'] = self.result_ttl
         job = self.scheduler().enqueue_at(
@@ -176,7 +176,7 @@ class RepeatableJob(ScheduledTimeMixin, BaseJob):
             'repeat': self.repeat
         }
         if self.timeout:
-            kwargs['timeout'] = self.timeout
+            kwargs['job_timeout'] = self.timeout
         if self.result_ttl is not None:
             kwargs['result_ttl'] = self.result_ttl
         job = self.scheduler().schedule(**kwargs)
@@ -220,7 +220,7 @@ class CronJob(BaseJob):
             'repeat': self.repeat
         }
         if self.timeout:
-            kwargs['timeout'] = self.timeout
+            kwargs['job_timeout'] = self.timeout
         job = self.scheduler().cron(**kwargs)
         self.job_id = job.id
         return True
