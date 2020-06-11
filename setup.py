@@ -27,12 +27,12 @@ def get_version(root_path):
 
 
 tests_require = [
-    'factory_boy>=2.11.1',
+    "factory_boy>=2.11.1",
 ]
 
 setup(
-    name='readwise-django-rq-scheduler',
-    version='1.2.2',
+    name="django-rq-scheduler-2",
+    version="2.0.0",
     description="A database backed job scheduler for Django RQ",
     long_description=long_description,
     packages=find_packages(),
