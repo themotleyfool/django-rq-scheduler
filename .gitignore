@@ -66,3 +66,5 @@ target/
 
 # SQLite
 *.sqlite3
+
+.venv

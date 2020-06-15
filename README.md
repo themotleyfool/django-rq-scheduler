@@ -36,13 +36,13 @@ pip install git+https://github.com/themotleyfool/django-rq-scheduler.git@master#
 
 ### Update Django Settings
 
-1. Add `django_rq` and `django_rq_scheduler_2` to `INSTALLED_APPS` to `settings.py`:
+1. Add `django_rq` and `scheduler` to `INSTALLED_APPS` to `settings.py`:
 
 ```python
 	INSTALLED_APPS = [
     	...
     	"django_rq",
-    	"django_rq_scheduler_2",
+    	"scheduler",
     	...
 	]
 ```

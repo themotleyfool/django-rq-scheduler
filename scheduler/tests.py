@@ -1,23 +1,23 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from datetime import datetime, timedelta
 
-from django.conf import settings
-from django.core.exceptions import ValidationError
-from django.test import TestCase
+from datetime import datetime, timedelta
 
 import factory
 import pytz
+from django.conf import settings
+from django.core.exceptions import ValidationError
+from django.test import TestCase
 from django_rq import job
 from scheduler.models import CronJob, RepeatableJob, ScheduledJob
 
 
 class ScheduledJobFactory(factory.Factory):
 
-    name = factory.Sequence(lambda n: 'Addition {}'.format(n))
+    name = factory.Sequence(lambda n: "Addition {}".format(n))
     job_id = None
-    queue = 'default'
-    callable = 'scheduler.tests.test_job'
+    queue = "default"
+    callable = "scheduler.tests.test_job"
     enabled = True
 
     @factory.lazy_attribute
@@ -30,13 +30,13 @@ class ScheduledJobFactory(factory.Factory):
 
 class RepeatableJobFactory(factory.Factory):
 
-    name = factory.Sequence(lambda n: 'Addition {}'.format(n))
+    name = factory.Sequence(lambda n: "Addition {}".format(n))
     job_id = None
-    queue = 'default'
-    callable = 'scheduler.tests.test_job'
+    queue = "default"
+    callable = "scheduler.tests.test_job"
     enabled = True
     interval = 1
-    interval_unit = 'hours'
+    interval_unit = "hours"
     repeat = None
 
     @factory.lazy_attribute
@@ -49,10 +49,10 @@ class RepeatableJobFactory(factory.Factory):
 
 class CronJobFactory(factory.Factory):
 
-    name = factory.Sequence(lambda n: 'Addition {}'.format(n))
+    name = factory.Sequence(lambda n: "Addition {}".format(n))
     job_id = None
-    queue = 'default'
-    callable = 'scheduler.tests.test_job'
+    queue = "default"
+    callable = "scheduler.tests.test_job"
     enabled = True
     cron_string = "0 0 * * *"
     repeat = None
@@ -66,7 +66,7 @@ def test_job():
     return 1 + 1
 
 
-test_non_callable = 'I am a teapot'
+test_non_callable = "I am a teapot"
 
 
 class TestScheduledJob(TestCase):
@@ -76,50 +76,50 @@ class TestScheduledJob(TestCase):
 
     def test_callable_func(self):
         job = self.JobClass()
-        job.callable = 'scheduler.tests.test_job'
+        job.callable = "scheduler.tests.test_job"
         func = job.callable_func()
         self.assertEqual(test_job, func)
 
     def test_callable_func_not_callable(self):
         job = self.JobClass()
-        job.callable = 'scheduler.tests.test_non_callable'
+        job.callable = "scheduler.tests.test_non_callable"
         with self.assertRaises(TypeError):
             job.callable_func()
 
     def test_clean_callable(self):
         job = self.JobClass()
-        job.callable = 'scheduler.tests.test_job'
+        job.callable = "scheduler.tests.test_job"
         assert job.clean_callable() is None
 
     def test_clean_callable_invalid(self):
         job = self.JobClass()
-        job.callable = 'scheduler.tests.test_non_callable'
+        job.callable = "scheduler.tests.test_non_callable"
         with self.assertRaises(ValidationError):
             job.clean_callable()
 
     def test_clean(self):
         job = self.JobClass()
         job.queue = list(settings.RQ_QUEUES)[0]
-        job.callable = 'scheduler.tests.test_job'
+        job.callable = "scheduler.tests.test_job"
         assert job.clean() is None
 
     def test_clean_invalid(self):
         job = self.JobClass()
         job.queue = list(settings.RQ_QUEUES)[0]
-        job.callable = 'scheduler.tests.test_non_callable'
+        job.callable = "scheduler.tests.test_non_callable"
         with self.assertRaises(ValidationError):
             job.clean()
 
     def test_clean_queue_invalid(self):
         job = self.JobClass()
-        job.queue = 'xxxxxx'
-        job.callable = 'scheduler.tests.test_job'
+        job.queue = "xxxxxx"
+        job.callable = "scheduler.tests.test_job"
         with self.assertRaises(ValidationError):
             job.clean()
 
     def test_is_schedulable_already_scheduled(self):
         job = self.JobClass()
-        job.job_id = 'something'
+        job.job_id = "something"
         self.assertFalse(job.is_schedulable())
 
     def test_is_schedulable_disabled(self):
@@ -150,7 +150,7 @@ class TestScheduledJob(TestCase):
 
     def test_unschedule(self):
         job = self.JobClassFactory()
-        job.job_id = 'something'
+        job.job_id = "something"
         successful = job.unschedule()
         self.assertTrue(successful)
         self.assertIsNone(job.job_id)
@@ -163,10 +163,10 @@ class TestScheduledJob(TestCase):
 
     def test_schedule_time_utc(self):
         job = self.JobClass()
-        est = pytz.timezone('US/Eastern')
+        est = pytz.timezone("US/Eastern")
         scheduled_time = datetime(2016, 12, 25, 8, 0, 0, tzinfo=est)
         job.scheduled_time = scheduled_time
-        utc = pytz.timezone('UTC')
+        utc = pytz.timezone("UTC")
         expected = scheduled_time.astimezone(utc).isoformat()
         self.assertEqual(expected, job.schedule_time_utc().isoformat())
 
@@ -212,25 +212,25 @@ class TestRepeatableJob(TestScheduledJob):
     def test_interval_seconds_weeks(self):
         job = RepeatableJob()
         job.interval = 2
-        job.interval_unit = 'weeks'
+        job.interval_unit = "weeks"
         self.assertEqual(1209600.0, job.interval_seconds())
 
     def test_interval_seconds_days(self):
         job = RepeatableJob()
         job.interval = 2
-        job.interval_unit = 'days'
+        job.interval_unit = "days"
         self.assertEqual(172800.0, job.interval_seconds())
 
     def test_interval_seconds_hours(self):
         job = RepeatableJob()
         job.interval = 2
-        job.interval_unit = 'hours'
+        job.interval_unit = "hours"
         self.assertEqual(7200.0, job.interval_seconds())
 
     def test_interval_seconds_minutes(self):
         job = RepeatableJob()
         job.interval = 15
-        job.interval_unit = 'minutes'
+        job.interval_unit = "minutes"
         self.assertEqual(900.0, job.interval_seconds())
 
     def test_repeatable_schedule(self):
@@ -255,16 +255,16 @@ class TestCronJob(TestScheduledJob):
 
     def test_clean(self):
         job = self.JobClass()
-        job.cron_string = '* * * * *'
+        job.cron_string = "* * * * *"
         job.queue = list(settings.RQ_QUEUES)[0]
-        job.callable = 'scheduler.tests.test_job'
+        job.callable = "scheduler.tests.test_job"
         assert job.clean() is None
 
     def test_clean_cron_string_invalid(self):
         job = self.JobClass()
-        job.cron_string = 'not-a-cron-string'
+        job.cron_string = "not-a-cron-string"
         job.queue = list(settings.RQ_QUEUES)[0]
-        job.callable = 'scheduler.tests.test_job'
+        job.callable = "scheduler.tests.test_job"
         with self.assertRaises(ValidationError):
             job.clean_cron_string()
 
