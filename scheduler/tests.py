@@ -94,8 +94,18 @@ class TestScheduledJob(TestCase):
     def test_clean_callable_invalid(self):
         job = self.JobClass()
         job.callable = "scheduler.tests.test_non_callable"
-        with self.assertRaises(ValidationError):
+        with self.assertRaises(ValidationError) as ctx:
             job.clean_callable()
+
+        self.assertTrue("must be importable" in str(ctx.exception))
+
+    def test_clean_callable_attribute_error(self):
+        job = self.JobClass()
+        job.callable = "scheduler.tests.test_non_callable2"
+        with self.assertRaises(ValidationError) as ctx:
+            job.clean_callable()
+
+        self.assertTrue("incorrect attribute" in str(ctx.exception))
 
     def test_clean(self):
         job = self.JobClass()
